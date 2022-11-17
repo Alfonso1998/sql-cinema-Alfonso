@@ -65,3 +65,31 @@ SELECT film.titolo, attori.nome
 FROM film join recita on film.codfilm=recita.codfilm join attori on  recita.codattore=attori.codattore
 WHERE attori.nazionalita='Americana'
 
+
+/* 12)PER OGNI FILM PROIETTATO A NAPOLI A NATALE 2004 IL TITLO DEL FILM E IL NOME DELLA SALA*/
+SELECT distinct  film.titolo, sale.nome
+FROM film join proiezioni on film.codfilm=proiezioni.codfilm join sale on proiezioni.codsala=sale.codsala
+WHERE sale.citta='Napoli' and proiezioni.dataproiezione='2004-12-25'
+
+
+/*13)IL NUMERO DI SALE DI NAPOLI CON PIU' DI 60 POSTI*/
+SELECT COUNT(*) as numeroSale
+FROM sale
+WHERE sale.citta='Napoli' and sale.posti>60
+GROUP BY sale
+
+
+/* 14)IL NUMERO TOTALE DI POSTI NELLE SALE A MILANO*/
+SELECT sum(sale.posti) as totPosti
+FROM sale
+WHERE sale.citta='Milano'
+
+
+/* 15)PER OGNI CITTA' IL NUMERO DI SALE*/
+SELECT sale.citta, count(sale.nome)
+FROM sale
+GROUP BY sale.citta
+
+
+/* 16)PER OGNI CITTA' IL NUMERO DI SALE CON PIU' DI 60 POSTI*/
+
