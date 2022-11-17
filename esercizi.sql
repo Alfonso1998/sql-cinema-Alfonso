@@ -149,4 +149,9 @@ FROM attori
 WHERE attori.annonascita<1970
 
 
-/* 24)PER OGNI FILM DI FANTASCIENZA CHE NON E' MAI STATO PROIETTATO NEL 1/1/01 IL TITOLO E L'INCASSO TOTALE DI TUTTE LE SUE PROIEZIONI*/
+/* 24)PER OGNI FILM  DRAMMATICO CHE NON E' MAI STATO PROIETTATO NEL 1/1/01 IL TITOLO E L'INCASSO TOTALE DI TUTTE LE SUE PROIEZIONI*/
+SELECT distinct film.titolo,film.genere , sum( distinct incasso)
+FROM film join proiezioni on film.codfilm=proiezioni.codfilm
+WHERE film.genere='drammatico' and proiezioni.dataproiezione!='1/1/01'
+GROUP BY film.genere, film.titolo
+
