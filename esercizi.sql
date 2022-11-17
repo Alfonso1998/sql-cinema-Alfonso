@@ -105,10 +105,48 @@ WHERE film.annoproduzione>1990
 group by film.regista
 order by filmProdotti desc
 
-/* 18)PER OGNI REGISTA LINCASSO TOTALE DI TUTTE LE PROIEZIONI DEI SUOI FILM*/
+/* 18)PER OGNI REGISTA L'INCASSO TOTALE DI TUTTE LE PROIEZIONI DEI SUOI FILM*/
 SELECT film.regista, sum(proiezioni.incasso)
 FROM film join proiezioni on film.codfilm=proiezioni.codfilm
 GROUP BY film.regista
 
 
-/* 19)PER OGNI FILM DI S. SPIELBERG, IL TITOLO DEL FILM, IL NUMERO TOTALE DI PROIEZIONI E L'INCASSO TOTALE*/
+/* 19)PER OGNI FILM DI Quentin Tarantino, IL TITOLO DEL FILM, IL NUMERO  DI PROIEZIONI a Milano E L'INCASSO TOTALE*/
+SELECT film.regista, film.titolo, proiezioni.incasso, count(*) as numProiezioniMilano
+FROM film join proiezioni on film.codfilm=proiezioni.codfilm join sale on proiezioni.codsala=sale.codsala
+WHERE film.regista='Quentin Tarantino' and sale.citta='Milano'
+GROUP BY film.regista, film.titolo, proiezioni.incasso 
+
+
+/* 20)PER OGNI REGISTA E PER OGNI ATTORE IL NUMERO DI FILM DEL REGISTA CON L'ATTORE*/
+SELECT attori.nome,film.regista ,count(film.titolo) as filmInsieme
+from attori join recita on attori.codattore=recita.codattore join film on recita.codfilm=film.codfilm
+group by attori.nome,film.regista
+
+/*SELECT attori.nome,film.regista,film.titolo 
+from attori join recita on attori.codattore=recita.codattore join film on recita.codfilm=film.codfilm
+where film.regista='Christopher Nolan'*/
+
+
+
+/* 21)IL REGISTA ED IL TITOLO DEI FILM IN CUI RECITANO MENO DI 6 ATTORI*/
+SELECT film.regista,film.titolo,count(attori.nome) as numeroAttori
+FROM attori join recita on attori.codattore=recita.codattore join film on recita.codfilm=film.codfilm
+GROUP BY film.regista,film.titolo 
+HAVING count(attori.nome)<6
+
+
+/*22)PER OGNI FILM PRODOTTO DOPO IL 2000, IL CODICE, IL TITOLO, E L'INCASSO TOTALE DI TUTTE LE SUE PROIEZIONI*/
+SELECT distinct film.titolo,film.codfilm, sum(proiezioni.incasso)
+FROM film join proiezioni on film.codfilm=proiezioni.codfilm
+WHERE film.annoproduzione>2000
+GROUP BY film.titolo,film.codfilm
+
+
+/* 23)IL NUMERO DI ATTORI DEI FILM NATI PRIMA DEL 1970*/
+SELECT count(*)
+FROM attori 
+WHERE attori.annonascita<1970
+
+
+/* 24)PER OGNI FILM DI FANTASCIENZA CHE NON E' MAI STATO PROIETTATO NEL 1/1/01 IL TITOLO E L'INCASSO TOTALE DI TUTTE LE SUE PROIEZIONI*/
