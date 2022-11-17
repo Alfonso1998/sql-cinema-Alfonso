@@ -92,4 +92,23 @@ GROUP BY sale.citta
 
 
 /* 16)PER OGNI CITTA' IL NUMERO DI SALE CON PIU' DI 60 POSTI*/
+SELECT COUNT(*) as numeroSale
+FROM sale
+WHERE  sale.posti>60
+GROUP BY sale
 
+
+/* 17)PER OGNI REGISTA IL NUMERO DI FILM DIRETTI DOPO IL 1990*/
+SELECT  film.regista, count(film.regista) as filmProdotti
+FROM film
+WHERE film.annoproduzione>1990
+group by film.regista
+order by filmProdotti desc
+
+/* 18)PER OGNI REGISTA LINCASSO TOTALE DI TUTTE LE PROIEZIONI DEI SUOI FILM*/
+SELECT film.regista, sum(proiezioni.incasso)
+FROM film join proiezioni on film.codfilm=proiezioni.codfilm
+GROUP BY film.regista
+
+
+/* 19)PER OGNI FILM DI S. SPIELBERG, IL TITOLO DEL FILM, IL NUMERO TOTALE DI PROIEZIONI E L'INCASSO TOTALE*/
