@@ -50,14 +50,18 @@ WHERE sale.citta='Napoli' and proiezioni.dataproiezione='2004-12-25' and attori.
 /* 9)I TITOLI DEI FILM IN CUI RECITA M. MASTROIANNI OPPURE S.LOREN*/
 SELECT film.titolo,attori.nome
 FROM attori join recita on attori.codattore=recita.codattore join film on recita.codfilm=film.codfilm
-WHERE  attori.nome='S. Loren' or attori.nome='M.mastroianni' 
+WHERE  attori.nome='S. Loren' or attori.nome='M. Mastroianni' 
 
 
 
 /* 10) TITOLI DEI FILM IN CUI RECITA M. MASTROIANNI E S.LOREN*/
 SELECT film.titolo
 FROM attori join recita on attori.codattore=recita.codattore join film on recita.codfilm=film.codfilm
-WHERE  attori.nome='S. Loren' and attori.nome='M.mastroianni'
+WHERE  attori.nome='S. Loren' and attori.nome='M. Mastroianni' 
 
 
-/* 11)PER OGNI FILM IN CUI RECITA UN ATTORE FRANCESE, IL TITOLO DEL FILM E IL NOME DELL'ATTORE*/
+/* 11)PER OGNI FILM IN CUI RECITA UN ATTORE AMERICANO, IL TITOLO DEL FILM E IL NOME DELL'ATTORE*/
+SELECT film.titolo, attori.nome
+FROM film join recita on film.codfilm=recita.codfilm join attori on  recita.codattore=attori.codattore
+WHERE attori.nazionalita='Americana'
+
