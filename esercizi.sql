@@ -25,6 +25,39 @@ WHERE film.nazionalita='giapponese' and film.genere='fantascienza' and film.anno
 
 
 /*5)IL TITOLO DEL FILM DELLO STESSO REGISTA DI TENET */
-SELECT film.titolo,film.regista
+SELECT film.titolo
 FROM film
 WHERE film.regista='Christopher Nolan'
+
+/* 6)IL TITOLO E IL GENERE DEL FILM PROIETTATI IL 24 GENNAIO 2004*/
+SELECT distinct film.titolo, film.genere 
+FROM film join proiezioni on film.codfilm=proiezioni.codfilm
+WHERE proiezioni.dataproiezione= '2004-01-25'
+
+
+/* 7)IL TITOLO E IL GENERE DEL FILM PROIETTATI a napoli IL GIORNO DI NATALE*/
+SELECT distinct film.titolo, film.genere,film.nazionalita, proiezioni.dataproiezione
+FROM film join proiezioni on film.codfilm=proiezioni.codfilm
+where film.nazionalita='Napoli' and proiezioni.dataproiezione='2004-12-25'
+
+
+/* 8)I NOMI DELLE SALE A NAPOLI IN CUI IL GIORNO DI NATALE 2004 E' STATO PROIETTATO UN FILM CON S.LOREN*/
+SELECT sale.nome 
+FROM attori join recita on attori.codattore=recita.codattore join film on film.codfilm=recita.codfilm join proiezioni on film.codfilm=proiezioni.codfilm join sale on proiezioni.codsala=sale.codsala
+WHERE sale.citta='Napoli' and proiezioni.dataproiezione='2004-12-25' and attori.nome='S. Loren'
+
+
+/* 9)I TITOLI DEI FILM IN CUI RECITA M. MASTROIANNI OPPURE S.LOREN*/
+SELECT film.titolo,attori.nome
+FROM attori join recita on attori.codattore=recita.codattore join film on recita.codfilm=film.codfilm
+WHERE  attori.nome='S. Loren' or attori.nome='M.mastroianni' 
+
+
+
+/* 10) TITOLI DEI FILM IN CUI RECITA M. MASTROIANNI E S.LOREN*/
+SELECT film.titolo
+FROM attori join recita on attori.codattore=recita.codattore join film on recita.codfilm=film.codfilm
+WHERE  attori.nome='S. Loren' and attori.nome='M.mastroianni'
+
+
+/* 11)PER OGNI FILM IN CUI RECITA UN ATTORE FRANCESE, IL TITOLO DEL FILM E IL NOME DELL'ATTORE*/

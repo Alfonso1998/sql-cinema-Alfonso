@@ -81,6 +81,7 @@ insert into sale values(1,100,'Antares','Roma');
 insert into sale values(2,150,'Odeon','Milano');
 insert into sale values(3,200,'Svev','Torino');
 
+
 create table proiezioni(
     codProiezione int primary key,
     codFilm char(4),
